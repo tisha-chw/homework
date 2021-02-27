@@ -2,6 +2,7 @@
 
 Для запуска проекта необходимы:
 docker https://docs.docker.com/get-docker/
+
 node.js https://nodejs.org/en/
 
 Перед началом запуска:
