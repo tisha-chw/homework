@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="/css/common.css"/>
+    <link rel="stylesheet" href="/css/materialize.min.css"/>
+    <script src="/js/materialize.js"></script>
+    <script src="/js/axios.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col s6 offset-s3">
+            <form class="card-panel" onsubmit="onFormSubmit(event)" method="post" autocomplete="off">
+                <h3 class="header">Регистрация</h3>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="login" autocomplete="off" name="login" type="text" class="validate">
+                        <label for="login">Логин</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="lastName">Фамилия</label>
+                        <input type="text" autocomplete="off" name="lastName" class="validate" id="lastName"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="firstName">Имя</label>
+                        <input type="text" autocomplete="off" name="firstName" class="validate" id="firstName"/>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="middleName">Отчество</label>
+                        <input type="text" autocomplete="off" name="middleName" class="validate" id="middleName"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="birthDate">Дата рождения</label>
+                        <input type="text" class="datepicker" name="birthDate" id="birthDate"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s5">
+                        <label for="passportSerial">Серия паспорта</label>
+                        <input type="text" autocomplete="off" class="validate" name="passportSerial" maxlength="4"
+                               id="passportSerial"/>
+                    </div>
+                    <div class="input-field col s7">
+                        <label for="passportNumber">Номер паспорта</label>
+                        <input type="text" autocomplete="off" class="validate" name="passportNumber" maxlength="6"
+                               id="passportNumber"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="password">Пароль</label>
+                        <input type="password" name="password" class="validate" autocomplete="new-password"
+                               id="password"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="btn waves-effect waves-light" type="submit">зарегистрироваться
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+  function onFormSubmit(event) {
+    event.preventDefault();
+    axios({
+      method: 'post',
+      url: 'api/registration',
+      data: Object.fromEntries(new FormData(event.target).entries())
+    }).then(function () {
+      window.location.href = '/';
+    }, function () {
+      alert('Проверьте корректность заполнения полей')
+    })
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var elems = document.querySelectorAll('.datepicker');
+    var instances = M.Datepicker.init(elems, { format: 'dd.mm.yyyy' });
+  });
+</script>
+</body>
+</html>

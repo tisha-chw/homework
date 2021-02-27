@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql8.0
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=$DB_PASSWORD
+    volumes:
+      - $DB_FOLDER:/var/lib/mysql
+    networks:
+      - homework-network
+
+networks:
+  homework-network:
+    driver: bridge
+
