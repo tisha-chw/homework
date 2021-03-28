@@ -1,6 +1,19 @@
 version: '3'
 
 services:
+
+  nastya-homework:
+    image: nastya-homework
+    build: .
+    container_name: nastya-homework
+
+    ports:
+      - "4000:3333"
+    networks:
+      - homework-network
+    depends_on:
+      - mysql
+
   mysql:
     image: mysql:8.0
     container_name: mysql8.0
@@ -17,4 +30,3 @@ services:
 networks:
   homework-network:
     driver: bridge
-

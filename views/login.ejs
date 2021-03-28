@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+    <link rel="stylesheet" href="/css/common.css"/>
+    <link rel="stylesheet" href="/css/materialize.min.css"/>
+    <script src="/js/materialize.js"></script>
+    <script src="/js/axios.min.js"></script>
+</head>
+<body class="valign-wrapper">
+<div class="container">
+    <div class="row">
+        <div class="col s6 offset-s3">
+            <form class="card-panel" onsubmit="onFormSubmit(event)" method="post" autocomplete="off">
+                <h3 class="header">Авторизация</h3>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="login" name="login" autocomplete="off" type="text" class="validate">
+                        <label for="login">Логин</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="password" name="password" autocomplete="new-password" type="password"
+                               class="validate">
+                        <label for="password">Пароль</label>
+                    </div>
+                </div>
+                <div class="row">
+                     <div class="col s6">
+                        <a class="btn waves-effect waves-light" href="/registration">регистрация
+                        </a>
+                    </div>
+                    <div class="col s6 right-align">
+                        <button class="btn waves-effect waves-light" type="submit">войти
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+  function onFormSubmit(event) {
+    event.preventDefault();
+    axios({
+      method: 'post',
+      url: 'api/login',
+      data: Object.fromEntries(new FormData(event.target).entries())
+    }).then(function(){
+       window.location.href = '/';
+    }, function(){
+      alert('Неверное сочетание пароля/логина')
+    })
+  }
+
+  M.updateTextFields();
+</script>
+</body>
+
+</html>

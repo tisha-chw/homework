@@ -1,21 +1,25 @@
-const crypto = require("crypto");
+var crypto = require("crypto");
 
-const generateSalt = ()=> crypto.randomBytes(32).toString("hex");
+function validatePassword(password, hash, salt) {
+  var hashVerify = crypto
+      .pbkdf2Sync(password, salt, 10000, 64, "sha512")
+      .toString("hex");
+  return hash === hashVerify;
+}
 
-const generateHash = (password, salt) => crypto
-    .pbkdf2Sync(password, salt, 10000, 64, "sha512")
-    .toString("hex");
-
-const generatePassword = password => {
-  const salt = generateSalt();
-  const hash = generateHash(password, salt);
+function generatePassword(password) {
+  var salt = crypto.randomBytes(32).toString("hex");
+  var genHash = crypto
+      .pbkdf2Sync(password, salt, 10000, 64, "sha512")
+      .toString("hex");
 
   return {
-    salt,
-    hash,
+    salt: salt,
+    hash: genHash,
   };
-};
+}
 
 module.exports = {
   generatePassword,
+  validatePassword,
 };

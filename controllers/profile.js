@@ -1,19 +1,18 @@
 const userService = require("../services/user");
 const registrationRequestSchema = require("../schemas/registration");
 
-const registrationPageController = (req, res) => {
+const profilePageController = (req, res) => {
   if (req.isAuthenticated()) {
-    res.redirect("/");
+    res.render("profile", { user: req.user });
   } else {
-    res.render("registration");
+    res.redirect("/login");
   }
 };
 
-const registrationController = async (req, res, next) => {
+const profileController = async (req, res, next) => {
   try {
     const value = await registrationRequestSchema.validateAsync(req.body);
-    const user = await userService.createUser(value);
-
+    const user = await userService.updateUser(value);
     req.login(user, function (err) {
       if (err) {
         res.sendStatus(400);
@@ -28,6 +27,6 @@ const registrationController = async (req, res, next) => {
 };
 
 module.exports = {
-  registrationPageController,
-  registrationController,
+  profilePageController,
+  profileController,
 };
